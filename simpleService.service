@@ -1,0 +1,8 @@
+[Unit]
+Description=Service to print time and the name of top 10 processes based on memory consumption and column each 3 minutes.
+
+[Service]
+ExecStart=/etc/simpleService.sh
+
+[Install]
+WantedBy=multi-user.target
