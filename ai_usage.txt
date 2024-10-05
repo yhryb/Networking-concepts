@@ -1,0 +1,3 @@
+- Main prompts: why does the error occur; how is this packet used in scripting; explain this; what needs to be installed;
+- Code: code adjustment when encountering errors
+- Writing systemd
