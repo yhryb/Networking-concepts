@@ -3,6 +3,7 @@ Description=Service to print time and the name of top 10 processes based on memo
 
 [Service]
 ExecStart=/etc/simpleService.sh
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
