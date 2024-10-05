@@ -23,7 +23,7 @@ sudo chmod +x /etc/simpleService.sh
 echo "Copying simpleService.service to the etc directory"
 sudo cp ./simpleService.service /etc/systemd/system/simpleService.service
 sudo systemctl daemon-reload
-#let systemd know about the simpleService.service, daemon-reload refreshes systemd
+#let systemd know about the simpleService.service; daemon-reload refreshes systemd
 sudo systemctl enable simpleService.service 
 #enable to run at the start of the system
 
