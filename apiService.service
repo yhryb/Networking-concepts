@@ -1,0 +1,19 @@
+[Unit]
+Description=Custom API Server Service
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/apiServer.sh
+
+Restart=on-failure
+RestartSec=5
+
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=apiService
+
+User=nobody
+Group=nogroup
+
+[Install]
+WantedBy=multi-user.target
