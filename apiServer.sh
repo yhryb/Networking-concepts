@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Log file for server
 LOGFILE="/var/log/apiServer.log"
 
 socat -T30 TCP-LISTEN:4242,fork EXEC:"/usr/bin/apiServer.sh",pty,setsid,ctty & #timeout if 30 seconds no response; fork is to fork a new process each time
