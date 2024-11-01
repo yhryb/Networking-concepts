@@ -23,30 +23,28 @@ if [[ "$serverResponse" == "Buonjorno! Your surname?" ]]; then
 
     echo "Your DNS server?" >&3 
 
-    read -u 3 serverResponse
-    echo "Server: $serverResponse"
-
+    echo "192.168.64.6" >&3
     read -u 3 serverResponse
     echo "Server: $serverResponse"
 
     while true; do
         echo "Enter API command (GetAlbumBySong <song_name>, GetSongsOfPerformer <performer_name>, exit): "
-        read apiCommand
+        read apiCommand commandParam
 
         if [[ "$apiCommand" == "exit" ]]; then
-        echo "exit" >&3
+            echo "exit" >&3
             read -u 3 serverResponse #waiting for server response before breaking the loop
             echo "Server: $serverResponse"
             break
         fi
 
-        echo "$apiCommand" >&3
+        echo "$apiCommand $commandParam" >&3
         
         read -u 3 serverResponse
-         "Server Response: $serverResponse"
+        echo "Server Response: $serverResponse"
     done
 else
-    log "Invalid handshake response from server."
+    echo "Invalid handshake response from server."
     exit 1
 fi
 
