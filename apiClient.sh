@@ -1,14 +1,14 @@
 #!/bin/bash
 
 if [[ $# -ne 2 ]]; then
-    echo "exactly 2 arguments needed - ip and port"
+    echo "Usage: $0 <server_ip> <server_port>"
     exit 1
 fi
 
 SERVER_IP=$1 #first argument for ip
 SERVER_PORT=$2
 
-exec 3<>/dev/tcp/$SERVER_IP/$SERVER_PORT #connect to the server, creating a new descriptor
+exec 3<>/dev/tcp/$SERVER_IP/$SERVER_PORT || { echo "Failed to connect to server"; exit 1; }#connect to the server, creating a new descriptor
 
 echo "Buonjorno!" >&3 #sending buonjorno with descriptor
 
@@ -23,17 +23,20 @@ if [[ "$serverResponse" == "Buonjorno! Your surname?" ]]; then
 
     echo "Your DNS server?" >&3 
 
-    read dnsServer
-    echo "$dnsServer" >&3
+    read -u 3 serverResponse
+    echo "Server: $serverResponse"
 
     read -u 3 serverResponse
     echo "Server: $serverResponse"
 
     while true; do
-        echo "Enter API command (or type 'exit' to quit): "
+        echo "Enter API command (GetAlbumBySong <song_name>, GetSongsOfPerformer <performer_name>, exit): "
         read apiCommand
 
         if [[ "$apiCommand" == "exit" ]]; then
+        echo "exit" >&3
+            read -u 3 serverResponse #waiting for server response before breaking the loop
+            echo "Server: $serverResponse"
             break
         fi
 
