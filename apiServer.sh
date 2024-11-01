@@ -33,7 +33,7 @@ log "Handshake complete with surname: $someSurname and DNS server: $dnsServer"
 fetchFromDB() {
   local searchField=$1
   local searchValue=$2
-  result=$(grep -i "$searchValue" db.txt | awk -F';' -v field="$searchField" '{ print $field }')
+  result=$(grep -i "$searchValue" /etc/apiService/db.txt | awk -F';' -v field="$searchField" '{ print $field }')
   if [[ -z "$result" ]]; then
     echo "No match found for $searchValue."
   else
