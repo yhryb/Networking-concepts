@@ -3,14 +3,17 @@ Description=Custom API Server Service
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/apiServer.sh
+ExecStart=/usr/bin/socat ExecStart=/usr/bin/socat -T30 TCP-LISTEN:4242,fork EXEC:/usr/bin/apiServer.sh,pty,setsid,ctty #now server manages one client at a time
+#fork creates a new child process for each new connection, so each client has their own process, so different clients do not interfere into eachother's process
+#pty creates pseudo-terminal for each connection
+#setsid makes each instance of the command a separate session and process group, isolating it from the parent process
+#ctty sets each apiServer.sh instance as its own controlling terminal
 
 Restart=on-failure
 RestartSec=5
 
-StandardOutput=syslog
-StandardError=syslog
-SyslogIdentifier=apiService
+StandardOutput=journal
+StandardError=journal
 
 User=nobody
 Group=nogroup
