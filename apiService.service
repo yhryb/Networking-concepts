@@ -15,8 +15,8 @@ RestartSec=5
 StandardOutput=journal
 StandardError=journal
 
-User=your_desired_user
-Group=your_desired_group
+User=Special_user
+Group=Special_group
 
 [Install]
 WantedBy=multi-user.target
