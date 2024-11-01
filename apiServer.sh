@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Server listening on port 4242..."
+LOGFILE="/var/log/apiServer.log"
 
 log() {
   echo "$(date) - $1" >> $LOGFILE #$logfile appends to the logfile
@@ -16,11 +16,23 @@ fi
 
 echo "Buonjorno! Your surname?"
 
-read someSurname
+read -r someSurname
+
+if [[ ! "$someSurname" =~ ^[a-zA-Z]+$ ]]; then
+  echo "Invalid surname format. Disconnecting."
+  log "Invalid surname format: $someSurname"
+  exit 1
+fi
 
 echo "Your DNS server?"
 
-read dnsServer
+read -r dnsServer
+
+if [[ ! "$dnsServer" =~ ^([0-9]{1,3}\.){3}[0-9]{1,3}$ ]]; then
+  echo "Invalid DNS format. Disconnecting."
+  log "Invalid DNS format: $dnsServer"
+  exit 1
+fi
 
 echo "Ok. Ready."
 
@@ -39,23 +51,19 @@ fetchFromDB() {
 
 while true; do
   echo "Enter API command:"
-  read apiCommand
+  read -r apiCommand apiParam
 
   case "$apiCommand" in
-    "get_album_by_song")
-      echo "Enter song name:"
-      read songName
-      album=$(fetchFromDB 3 "$songName")
+    "GetAlbumBySong")
+      album=$(fetchFromDB 3 "$apiParam")
       echo "Album: $album"
-      log "Fetched album for song '$songName': $album"
+      log "Fetched album for song '$apiParam': $album"
       ;;
     
-    "get_songs_by_performer")
-      echo "Enter performer name:"
-      read performerName
-      songs=$(fetchFromDB 1 "$performerName")
-      echo "Songs by $performerName: $songs"
-      log "Fetched songs by performer '$performerName': $songs"
+    "GetSongsByPerformer")
+      songs=$(fetchFromDB 1 "$apiParam")
+      echo "Songs by $apiParam: $songs"
+      log "Fetched songs by performer '$apiParam': $songs"
       ;;
     
     "exit")
@@ -66,7 +74,7 @@ while true; do
 
     *)
       echo "Invalid command."
-      log "Invalid command received: $apiCommand"
+      log "Invalid command received: $apiCommand $apiParam"
       ;;
   esac
 done
