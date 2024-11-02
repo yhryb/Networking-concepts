@@ -17,7 +17,6 @@ fi
 
 echo "Buonjorno! Your surname?"
 echo "END"
-
 read -r someSurname
 
 if [[ ! "$someSurname" =~ ^[a-zA-Z]+$ ]]; then
@@ -29,7 +28,6 @@ fi
 
 echo "Your DNS server?"
 echo "END"
-
 read -r dnsServer
 
 if [[ ! "$dnsServer" =~ ^([0-9]{1,3}\.){3}[0-9]{1,3}$ ]]; then
