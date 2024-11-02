@@ -1,20 +1,21 @@
-Imagine;John Lennon;Imagine
-Bohemian Rhapsody;Queen;A Night at the Opera
-Hotel California;Eagles;Hotel California
-Billie Jean;Michael Jackson;Thriller
-Smells Like Teen Spirit;Nirvana;Nevermind
-Hey Jude;The Beatles;Hey Jude
-Stairway to Heaven;Led Zeppelin;Led Zeppelin IV
-Wonderwall;Oasis;(Whats the Story) Morning Glory?
-Like a Rolling Stone;Bob Dylan;Highway Revisited
-Purple Haze;Jimi Hendrix;Are You Experienced
-Sweet Child o Mine;Guns N Roses;Appetite Destruction
-I Will Always Love You;Whitney Houston;The Bodyguard
-Comfortably Numb;Pink Floyd;The Wall
-Born to Run;Bruce Springsteen;Born to Run
-Losing My Religion;R.E.M.;Out of Time
-My Heart Will Go On;Celine Dion;Lets Talk About Love
-Rolling in the Deep;Adele;
-Hound Dog;Elvis Presley;Elvis Golden Records
-Beat It;Michael Jackson;Thriller
-Somebody to Love;Queen;A Day at the Races
+Imagine;John_Lennon;Imagine
+Bohemian_Rhapsody;Queen;A_Night_at_the_Opera
+Hotel_California;Eagles;Hotel_California
+Billie_Jean;Michael_Jackson;Thriller
+Smells_Like_Teen_Spirit;Nirvana;Nevermind
+Hey_Jude;The_Beatles;Hey_Jude
+Stairway_to_Heaven;Led_Zeppelin;Led_Zeppelin_IV
+Wonderwall;Oasis;(Whats_the_Story)_Morning_Glory
+Like_a_Rolling_Stone;Bob_Dylan;Highway_Revisited
+Purple_Haze;Jimi_Hendrix;Are_You_Experienced
+Sweet_Child_o_Mine;Guns_N_Roses;Appetite_Destruction
+I_Will_Always_Love_You;Whitney_Houston;The_Bodyguard
+Comfortably_Numb;Pink_Floyd;The_Wall
+Born_to_Run;Bruce_Springsteen;Born_to_Run
+Losing_My_Religion;REM.;Out_of_Time
+My_Heart_Will_Go_On;Celine_Dion;Lets_Talk_About_Love
+Rolling_in_the_Deep;Adele;
+Hound_Dog;Elvis_Presley;Elvis_Golden_Records
+Beat_It;Michael_Jackson;Thriller
+Somebody_to_Love;Queen;A_Day_at_the_Races
+
