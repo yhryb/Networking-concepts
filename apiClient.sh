@@ -36,6 +36,11 @@ if [[ "$serverResponse" == "Buonjorno! Your surname?" ]]; then
             read -u 3 serverResponse #waiting for server response before breaking the loop
             echo "Server: $serverResponse"
             break
+
+            echo "Goodbye" >&3
+            read -u 3 serverResponse
+            echo "Server: $serverResponse"
+            break
         fi
 
         echo "$apiCommand $commandParam" >&3
