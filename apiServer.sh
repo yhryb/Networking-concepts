@@ -60,26 +60,31 @@ while true; do
   echo "END"
   read -r apiCommand apiParam
 
-  if [[ "$apiCommand" == "exit" ]]; then
-    echo "Closing connection."
-    log "Client disconnected."
-    echo "END"
-    break
-  elif [[ "$apiCommand" == "GetAlbumBySong" ]]; then
-    album=$(fetchFromDB 3 "$apiParam")
-    echo "Album: $album"
-    log "Fetched album for song '$apiParam': $album"
-    echo "END"
-  elif [[ "$apiCommand" == "GetSongsByPerformer" ]]; then
-    songs=$(fetchFromDB 1 "$apiParam")
-    echo "Songs by $apiParam: $songs"
-    log "Fetched songs by performer '$apiParam': $songs"
-    echo "END"
-  else
-    echo "Invalid command."
-    log "Invalid command received: $apiCommand $apiParam"
-    echo "END"
-  fi
+  case "$apiCommand" in
+    "exit")
+      echo "Closing connection."
+      log "Client disconnected."
+      echo "END"
+      break
+      ;;
+    "GetAlbumBySong")
+      album=$(fetchFromDB 3 "$apiParam")
+      echo "Album: $album"
+      log "Fetched album for song '$apiParam': $album"
+      echo "END"
+      ;;
+    "GetSongsByPerformer")
+      songs=$(fetchFromDB 1 "$apiParam")
+      echo "Songs by $apiParam: $songs"
+      log "Fetched songs by performer '$apiParam': $songs"
+      echo "END"
+      ;;
+    *)
+      echo "Invalid command."
+      log "Invalid command received: $apiCommand $apiParam"
+      echo "END"
+      ;;
+  esac
 done
 
 
