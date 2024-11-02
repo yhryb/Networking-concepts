@@ -14,24 +14,37 @@ exec 3<>/dev/tcp/$SERVER_IP/$SERVER_PORT || { echo "Failed to connect to server"
 
 # Begin handshake with "Buonjorno!"
 echo "Buonjorno!" >&3
-read -u 3 serverResponse
-echo "Server: $serverResponse"
-
-# Validate server handshake response
-if [[ "$serverResponse" != "Buonjorno! Your surname?" ]]; then
-    echo "Invalid handshake response from server."
-    exit 1
-fi
+while read -u 3 serverResponse; do
+    echo "Server: $serverResponse"
+    if [[ "$serverResponse" == "Buonjorno! Your surname?" ]]; then
+        break
+    fi
+done
 
 # Proceed with sending surname and DNS server details
-echo "YourSurname" >&3  
-read -u 3 serverResponse
-echo "Server: $serverResponse"
+echo "SomeSurname" >&3
+while read -u 3 serverResponse; do
+    echo "Server: $serverResponse"
+    if [[ "$serverResponse" == "Your DNS server?" ]]; then
+        break
+    fi
+done
 
-echo "Your DNS server?" >&3
 echo "192.168.64.6" >&3
-read -u 3 serverResponse
-echo "Server: $serverResponse"
+while read -u 3 serverResponse; do
+    echo "Server: $serverResponse"
+    if [[ "$serverResponse" == "Ok. Ready." ]]; then
+        break
+    fi
+done
+
+#goodbye message - when server says ill be back it is a signal the server is ready to receive commands
+while read -u 3 serverResponse; do
+    echo "Server: $serverResponse"
+    if [[ "$serverResponse" == "I'll be back!" ]]; then
+        break
+    fi
+done
 
 # Main command loop
 while true; do
@@ -41,20 +54,24 @@ while true; do
     # Exit condition
     if [[ "$apiCommand" == "exit" ]]; then
         echo "exit" >&3
-        read -u 3 serverResponse
-        echo "Server: $serverResponse"
-        
-        # Send a goodbye message to the server before exiting
-        echo "Goodbye" >&3
-        read -u 3 serverResponse
-        echo "Server: $serverResponse"
+        # Wait for the closing message
+        while read -u 3 serverResponse; do
+            echo "Server: $serverResponse"
+            if [[ "$serverResponse" == "Closing connection." ]]; then
+                break
+            fi
+        done
         break
     fi
 
     # Send command to the server and read response
     echo "$apiCommand $commandParam" >&3
-    read -u 3 serverResponse
-    echo "Server Response: $serverResponse"
+    while read -u 3 serverResponse; do
+        echo "Server Response: $serverResponse"
+        if [[ "$serverResponse" == "END" ]]; then
+            break
+        fi
+    done
 done
 
 # Close the connection
