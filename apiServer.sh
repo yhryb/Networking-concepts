@@ -16,7 +16,7 @@ if [[ "$clientMessage" != "Buonjorno!" ]]; then #recognising only Buonjorno
 fi
 
 echo "Buonjorno! Your surname?"
-echo"END"
+echo "END"
 
 read -r someSurname
 
