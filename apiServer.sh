@@ -11,26 +11,31 @@ read clientMessage #storing input in clientMessage
 if [[ "$clientMessage" != "Buonjorno!" ]]; then #recognising only Buonjorno
   echo "Connection dropped: Invalid handshake start"
   log "Invalid handshake start from client"
+  echo "END"
   exit 1
 fi
 
 echo "Buonjorno! Your surname?"
+echo"END"
 
 read -r someSurname
 
 if [[ ! "$someSurname" =~ ^[a-zA-Z]+$ ]]; then
   echo "Invalid surname format. Disconnecting."
   log "Invalid surname format: $someSurname"
+  echo "END"
   exit 1
 fi
 
 echo "Your DNS server?"
+echo "END"
 
 read -r dnsServer
 
 if [[ ! "$dnsServer" =~ ^([0-9]{1,3}\.){3}[0-9]{1,3}$ ]]; then
   echo "Invalid DNS format. Disconnecting."
   log "Invalid DNS format: $dnsServer"
+  echo "END"
   exit 1
 fi
 
@@ -47,37 +52,34 @@ fetchFromDB() {
   else
     echo "$result"
   fi
+  echo "END"
 }
 
 while true; do
   echo "Enter API command:"
+  echo "END"
   read -r apiCommand apiParam
 
-  case "$apiCommand" in
-    "GetAlbumBySong")
-      album=$(fetchFromDB 3 "$apiParam")
-      echo "Album: $album"
-      log "Fetched album for song '$apiParam': $album"
-      ;;
-    
-    "GetSongsByPerformer")
-      songs=$(fetchFromDB 1 "$apiParam")
-      echo "Songs by $apiParam: $songs"
-      log "Fetched songs by performer '$apiParam': $songs"
-      ;;
-    
-    "exit")
-      echo "Closing connection."
-      log "Client disconnected."
-      break
-      ;;
-
-    *)
-      echo "Invalid command."
-      log "Invalid command received: $apiCommand $apiParam"
-      ;;
-  esac
+  if [[ "$apiCommand" == "exit" ]]; then
+    echo "Closing connection."
+    log "Client disconnected."
+    echo "END"
+    break
+  elif [[ "$apiCommand" == "GetAlbumBySong" ]]; then
+    album=$(fetchFromDB 3 "$apiParam")
+    echo "Album: $album"
+    log "Fetched album for song '$apiParam': $album"
+    echo "END"
+  elif [[ "$apiCommand" == "GetSongsByPerformer" ]]; then
+    songs=$(fetchFromDB 1 "$apiParam")
+    echo "Songs by $apiParam: $songs"
+    log "Fetched songs by performer '$apiParam': $songs"
+    echo "END"
+  else
+    echo "Invalid command."
+    log "Invalid command received: $apiCommand $apiParam"
+    echo "END"
+  fi
 done
-
 
 
