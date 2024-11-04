@@ -15,8 +15,8 @@ RestartSec=5
 StandardOutput=journal
 StandardError=journal
 
-User=Special_user
-Group=Special_group
+User=ubuntu
+Group=ubuntu
 
 [Install]
 WantedBy=multi-user.target
