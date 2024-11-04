@@ -1,22 +1,45 @@
 #!/bin/bash
 
-# Install socat if not installed
-if ! command -v socat &> /dev/null; then
-  sudo apt update
-  sudo apt install -y socat
+# Check if script is run as root (required for installing packages and system-wide configuration)
+if [ "$EUID" -ne 0 ]; then
+    echo "Please run as root"
+    exit 1
 fi
 
-# Create necessary directories
-sudo mkdir -p /etc/apiServer
-sudo mkdir -p /var/log/apiServer
+# Install required packages
+echo "Installing required packages..."
+apt update
+apt install -y socat
 
-# Move db.txt to the appropriate directory
-sudo cp db.txt /etc/apiServer/db.txt
-sudo chmod 644 /etc/apiServer/db.txt
+# Copy the apiServer.sh script to /usr/bin and make it executable
+echo "Configuring apiServer.sh..."
+cp apiServer.sh /usr/bin/apiServer.sh
+chmod +x /usr/bin/apiServer.sh
 
-# Move and enable the service file
-sudo cp apiService.service /etc/systemd/system/apiService.service
-sudo systemctl daemon-reload
-sudo systemctl enable apiService.service
-sudo systemctl start apiService.service
-echo "Server configured and started."
+# Set up logging directory and log file
+LOG_DIR="/var/log"
+LOG_FILE="$LOG_DIR/apiServer.log"
+touch "$LOG_FILE"
+chmod 644 "$LOG_FILE"
+
+# Copy the systemd service file to the system directory
+echo "Setting up systemd service..."
+cp apiService.service /etc/systemd/system/apiService.service
+
+# Reload systemd to recognize the new service
+systemctl daemon-reload
+
+# Enable and start the apiService service
+echo "Enabling and starting the apiService service..."
+systemctl enable apiService
+systemctl start apiService
+
+# Confirm if the service is active
+if systemctl is-active --quiet apiService; then
+    echo "apiService is running successfully."
+else
+    echo "apiService failed to start. Check /var/log/syslog for details."
+    exit 1
+fi
+
+echo "Server setup is complete."
