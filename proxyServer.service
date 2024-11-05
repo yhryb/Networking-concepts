@@ -1,0 +1,10 @@
+[Unit]
+Description=Proxy Server Service
+After=apache2.service
+
+[Service]
+ExecStart=/usr/bin/socat TCP4-LISTEN:80,fork,pktinfo system:/etc/proxyServer.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
