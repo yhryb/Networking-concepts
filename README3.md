@@ -43,5 +43,13 @@ You can automate the installation process by running the `configureSystem.sh` sc
 1. **Download the project files.**
 2. **Run the configuration script**:
 
+---
+P. S. Since I didn't see an ai usage filke needed in the assignment description, I will put it here in readme:
+
+1. Troubleshooting
+2. Assistance
+3. Explanation
+4. Format handling
+
 ```bash
 sudo bash configureSystem.sh
